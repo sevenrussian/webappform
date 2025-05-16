@@ -12,21 +12,6 @@
             max-width: 500px;
             margin: 0 auto;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
         button {
             background-color: #0088cc;
             color: white;
@@ -41,15 +26,31 @@
 </head>
 <body>
     <h1>WebAppForm</h1>
-    <form id="applicationForm">              
-        <button type="submit">Отправить</button>
-    </form>
-    <script>       
-        // Временно добавьте эту команду для теста
-        Telegram.WebApp.sendData("TEST_MESSAGE");
+    <button id="sendButton">Отправить тестовое сообщение</button>
+
+    <script>
+        // Проверяем инициализацию WebApp
+        if (!window.Telegram || !Telegram.WebApp) {
+            document.body.innerHTML = "<h2 style='color:red'>Ошибка: WebApp должен открываться через Telegram бота!</h2>";
+        } else {
+            console.log("WebApp инициализирован");
+            Telegram.WebApp.expand(); // Развернуть на весь экран
             
-        // Закрываем WebApp после отправки
-        Telegram.WebApp.close();
+            document.getElementById('sendButton').addEventListener('click', () => {
+                console.log("Попытка отправки данных...");
+                
+                // 1. Отправляем тестовое сообщение
+                Telegram.WebApp.sendData("TEST_MESSAGE_FROM_BUTTON");
+                
+                // 2. Показываем уведомление пользователю
+                Telegram.WebApp.showAlert("Данные отправлены!");
+                
+                // 3. Закрываем только через 2 секунды
+                setTimeout(() => {
+                    Telegram.WebApp.close();
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
