@@ -41,36 +41,15 @@
 </head>
 <body>
     <h1>WebAppForm</h1>
-    <form id="applicationForm">
-        <div class="form-group">
-            <label for="fullName">ФИО:</label>
-            <input type="text" id="fullName" required>
-        </div>
-               
+    <form id="applicationForm">              
         <button type="submit">Отправить</button>
     </form>
-
-    <script>
-        const form = document.getElementById('applicationForm');
-        const tg = window.Telegram.WebApp;
-        
-        tg.expand(); // Развернуть WebApp на весь экран
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    <script>       
+        // Временно добавьте эту команду для теста
+        Telegram.WebApp.sendData("TEST_MESSAGE");
             
-            const formData = {
-                fullName: document.getElementById('fullName').value
-            };
-            
-            // Отправляем данные обратно в бота
-            console.log("Форма отправлена:", formData);  // Проверка данных перед отправкой
-            Telegram.WebApp.sendData(JSON.stringify(formData));
-            console.log("Данные отправлены в бота");    // Проверка, что sendData выполнился
-            
-            // Закрываем WebApp после отправки
-            Telegram.WebApp.close();
-        });
+        // Закрываем WebApp после отправки
+        Telegram.WebApp.close();
     </script>
 </body>
 </html>
