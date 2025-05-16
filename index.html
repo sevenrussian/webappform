@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма подачи заявки</title>
+    <title>Тестовая форма WebApp</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -81,7 +81,9 @@
             };
             
             // Отправляем данные обратно в бота
+            console.log("Форма отправлена:", formData);  // Проверка данных перед отправкой
             tg.sendData(JSON.stringify(formData));
+            console.log("Данные отправлены в бота");    // Проверка, что sendData выполнился
             
             // Закрываем WebApp после отправки
             tg.close();
