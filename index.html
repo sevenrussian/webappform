@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тестовая форма WebApp</title>
+    <title>Форма подачи заявки</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -11,6 +11,21 @@
             padding: 20px;
             max-width: 500px;
             margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
         button {
             background-color: #0088cc;
@@ -22,35 +37,56 @@
             width: 100%;
             font-size: 16px;
         }
+        button:hover {
+            background-color: #0077bb;
+        }
     </style>
 </head>
-<body>
-    <h1>WebAppForm</h1>
-    <button id="sendButton">Отправить тестовое сообщение</button>
-
-    <script>
-        // Проверяем инициализацию WebApp
-        if (!window.Telegram || !Telegram.WebApp) {
-            document.body.innerHTML = "<h2 style='color:red'>Ошибка: WebApp должен открываться через Telegram бота!</h2>";
-        } else {
-            console.log("WebApp инициализирован");
-            Telegram.WebApp.expand(); // Развернуть на весь экран
+<script>
+    const form = document.getElementById('applicationForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            document.getElementById('sendButton').addEventListener('click', () => {
-                console.log("Попытка отправки данных...");
-                
-                // 1. Отправляем тестовое сообщение
-                Telegram.WebApp.sendData("TEST_MESSAGE_FROM_BUTTON");
-                
-                // 2. Показываем уведомление пользователю
-                Telegram.WebApp.showAlert("Данные отправлены!");
-                
-                // 3. Закрываем только через 2 секунды
-                setTimeout(() => {
-                    Telegram.WebApp.close();
-                }, 2000);
-            });
-        }
-    </script>
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                hireDate: document.getElementById('hireDate').value,
+                organization: document.getElementById('organization').value
+            };
+            
+            try {
+                Telegram.WebApp.ready();
+                Telegram.WebApp.sendData(formData);
+                Telegram.WebApp.close();
+                }
+        });
+</script>
+<body>
+    <h1>Форма подачи заявки</h1>
+    <form id="applicationForm">
+        <div class="form-group">
+            <label for="fullName">ФИО:</label>
+            <input type="text" id="fullName" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="hireDate">Дата приема:</label>
+            <input type="date" id="hireDate" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="organization">Организация:</label>
+            <select id="organization" required>
+                <option value="">Выберите организацию</option>
+                <option value="Организация 1">Организация 1</option>
+                <option value="Организация 2">Организация 2</option>
+                <option value="Организация 3">Организация 3</option>
+            </select>
+        </div>
+        
+        <button type="submit">Отправить</button>
+    </form>
 </body>
+<script type="text/javascript">
+    Telegram.WebApp.expand();
+</script>
 </html>
