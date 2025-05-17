@@ -12,9 +12,28 @@
             max-width: 500px;
             margin: 0 auto;
             line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-slide {
+            transition: transform 0.3s ease-in-out;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .form-slide.active {
+            transform: translateX(0);
+        }
+        .form-slide.next {
+            transform: translateX(100%);
+        }
+        .form-slide.prev {
+            transform: translateX(-100%);
         }
         .form-section {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             padding: 15px;
             border-radius: 8px;
             background-color: #f9f9f9;
@@ -41,6 +60,11 @@
             box-sizing: border-box;
             font-family: inherit;
         }
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
         button {
             background-color: #0088cc;
             color: white;
@@ -48,115 +72,225 @@
             padding: 12px 15px;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
             font-size: 16px;
-            margin-top: 10px;
             transition: background-color 0.3s;
+            flex: 1;
         }
         button:hover {
             background-color: #0077bb;
+        }
+        button.secondary {
+            background-color: #6c757d;
+        }
+        button.secondary:hover {
+            background-color: #5a6268;
         }
         textarea {
             min-height: 80px;
             resize: vertical;
         }
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            transition: background-color 0.3s;
+        }
+        .dot.active {
+            background-color: #0088cc;
+        }
     </style>
 </head>
 <body>
     <h3>Заявка на отправку</h3>
+    
+    <div class="progress-dots">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+    </div>
+    
     <form id="applicationForm">
-        <div class="form-section">
-            <h4>Общая информация</h4>
-            <div class="form-group">
-                <label for="deliveryType">Тип отправки:</label>
-                <select id="deliveryType" required>
-                    <option value="">Выберите</option>
-                    <option>Курьерская служба</option>
-                    <option>Почтовое отправление</option>
-                </select>
+        <!-- Слайд 1 - Общая информация -->
+        <div class="form-slide active" id="slide1">
+            <div class="form-section">
+                <h4>Общая информация</h4>
+                <div class="form-group">
+                    <label for="deliveryType">Тип отправки:</label>
+                    <select id="deliveryType" required>
+                        <option value="">Выберите</option>
+                        <option>Курьерская служба</option>
+                        <option>Почтовое отправление</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hireDate">Дата отправки:</label>
+                    <input type="date" id="hireDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Что отправляется:</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="urgency">Срочность:</label>
+                    <select id="urgency" required>
+                        <option value="">Выберите</option>
+                        <option>Срочная</option>
+                        <option>Обычная</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryDirection">Направление отправки:</label>
+                    <select id="deliveryDirection" required>
+                        <option value="">Выберите</option>
+                        <option>С возвратом</option>
+                        <option>В один конец</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="hireDate">Дата отправки:</label>
-                <input type="date" id="hireDate" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Что отправляется:</label>
-                <textarea id="description" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="urgency">Срочность:</label>
-                <select id="urgency" required>
-                    <option value="">Выберите</option>
-                    <option>Срочная</option>
-                    <option>Обычная</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="deliveryDirection">Направление отправки:</label>
-                <select id="deliveryDirection" required>
-                    <option value="">Выберите</option>
-                    <option>С возвратом</option>
-                    <option>В один конец</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <h4>Информация об отправителе</h4>
-            <div class="form-group">
-                <label for="senderName">ФИО и контакт:</label>
-                <input type="text" id="senderName" required>
-            </div>
-            <div class="form-group">
-                <label for="senderOrganization">Юр.лицо:</label>
-                <select id="senderOrganization" required>
-                    <option value="">Выберите организацию</option>
-                    <option>Магнетто (ООО)</option>
-                    <option>НПФ Интех (ООО)</option>
-                    <option>Телекоминвест (ООО)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="senderProject">Проект:</label>
-                <select id="senderProject" required>
-                    <option value="">Выберите проект</option>
-                    <option>Магнетто</option>
-                    <option>MadeTask</option>
-                    <option>Sellers</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="senderAddress">Адрес:</label>
-                <input type="text" id="senderAddress" required>
+            
+            <div class="btn-container">
+                <button type="button" class="next-btn">Далее →</button>
             </div>
         </div>
-
-        <div class="form-section">
-            <h4>Информация о получателе</h4>
-            <div class="form-group">
-                <label for="recipientName">ФИО:</label>
-                <input type="text" id="recipientName" required>
+        
+        <!-- Слайд 2 - Отправитель и получатель -->
+        <div class="form-slide next" id="slide2">
+            <div class="form-section">
+                <h4>Информация об отправителе</h4>
+                <div class="form-group">
+                    <label for="senderName">ФИО и контакт:</label>
+                    <input type="text" id="senderName" required>
+                </div>
+                <div class="form-group">
+                    <label for="senderOrganization">Юр.лицо:</label>
+                    <select id="senderOrganization" required>
+                        <option value="">Выберите организацию</option>
+                        <option>Магнетто (ООО)</option>
+                        <option>НПФ Интех (ООО)</option>
+                        <option>Телекоминвест (ООО)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="senderProject">Проект:</label>
+                    <select id="senderProject" required>
+                        <option value="">Выберите проект</option>
+                        <option>Магнетто</option>
+                        <option>MadeTask</option>
+                        <option>Sellers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="senderAddress">Адрес:</label>
+                    <input type="text" id="senderAddress" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="recipientPhone">Контактный телефон:</label>
-                <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
+            
+            <div class="form-section">
+                <h4>Информация о получателе</h4>
+                <div class="form-group">
+                    <label for="recipientName">ФИО:</label>
+                    <input type="text" id="recipientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipientPhone">Контактный телефон:</label>
+                    <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
+                </div>
+                <div class="form-group">
+                    <label for="recipientAddress">Адрес:</label>
+                    <input type="text" id="recipientAddress" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="recipientAddress">Адрес:</label>
-                <input type="text" id="recipientAddress" required>
+            
+            <div class="btn-container">
+                <button type="button" class="secondary prev-btn">← Назад</button>
+                <button type="submit">Отправить заявку</button>
             </div>
         </div>
-  
-        <button type="submit">Отправить заявку</button>
     </form>
 
     <script>
         Telegram.WebApp.expand();
         
-        const form = document.getElementById('applicationForm');
+        // Управление слайдами
+        const slides = document.querySelectorAll('.form-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
         
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev', 'next');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i < index) {
+                    slide.classList.add('prev');
+                } else {
+                    slide.classList.add('next');
+                }
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSlide = index;
+        }
+        
+        // Кнопки навигации
+        document.querySelector('.next-btn').addEventListener('click', () => {
+            // Проверка заполнения обязательных полей перед переходом
+            const requiredFields = document.querySelectorAll('#slide1 [required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'red';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                showSlide(1);
+            } else {
+                alert('Пожалуйста, заполните все обязательные поля');
+            }
+        });
+        
+        document.querySelector('.prev-btn').addEventListener('click', () => {
+            showSlide(0);
+        });
+        
+        // Клик по точкам прогресса
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.getAttribute('data-slide'));
+                if (slideIndex === 0 || (slideIndex === 1 && currentSlide === 1)) {
+                    showSlide(slideIndex);
+                }
+            });
+        });
+        
+        // Отправка формы
+        const form = document.getElementById('applicationForm');
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            
+            // Проверка телефона
+            const phoneInput = document.getElementById('recipientPhone');
+            const phoneRegex = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
+            
+            if (!phoneRegex.test(phoneInput.value)) {
+                alert('Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX');
+                phoneInput.focus();
+                return;
+            }
             
             const formData = {
                 deliveryType: document.getElementById('deliveryType').value,
@@ -172,16 +306,6 @@
                 urgency: document.getElementById('urgency').value,
                 deliveryDirection: document.getElementById('deliveryDirection').value
             };
-            
-            // Валидация телефона
-            const phoneInput = document.getElementById('recipientPhone');
-            const phoneRegex = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
-            
-            if (!phoneRegex.test(phoneInput.value)) {
-                alert('Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX');
-                phoneInput.focus();
-                return;
-            }
             
             Telegram.WebApp.sendData(JSON.stringify(formData));
             Telegram.WebApp.close();
