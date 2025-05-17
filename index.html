@@ -11,6 +11,7 @@
             padding: 20px;
             max-width: 500px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         .form-group {
             margin-bottom: 15px;
@@ -20,73 +21,154 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
+            font-family: inherit;
         }
         button {
             background-color: #0088cc;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #0077bb;
         }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
     </style>
 </head>
-<script>
-
-</script>
 <body>
-    <h1>Форма подачи заявки222</h1>
+    <h3>Заявка на отправку</h3>
     <form id="applicationForm">
         <div class="form-group">
-            <label for="fullName">ФИО:</label>
-            <input type="text" id="fullName" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="hireDate">Дата приема:</label>
-            <input type="date" id="hireDate" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="organization">Организация:</label>
-            <select id="organization" required>
-                <option value="">Выберите организацию</option>
-                <option value="Организация 1">Организация 1</option>
-                <option value="Организация 2">Организация 2</option>
-                <option value="Организация 3">Организация 3</option>
+            <label for="deliveryType">Тип отправки:</label>
+            <select id="deliveryType" required>
+                <option value="">Выберите</option>
+                <option>Курьерская служба</option>
+                <option>Почтовое отправление</option>
             </select>
         </div>
-        
-        <button type="submit">Отправить</button>
+        <div class="form-group">
+            <label for="hireDate">Дата отправки:</label>
+            <input type="date" id="hireDate" required>
+        </div>
+        <div class="form-group">
+            <label for="senderName">Отправитель (ФИО и контакт):</label>
+            <input type="text" id="senderName" required>
+        </div>
+        <div class="form-group">
+            <label for="senderOrganization">Юр.лицо отправителя:</label>
+            <select id="senderOrganization" required>
+                <option value="">Выберите организацию</option>
+                <option>Магнетто (ООО)</option>
+                <option>НПФ Интех (ООО)</option>
+                <option>Телекоминвест (ООО)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="senderProject">Проект отправителя:</label>
+            <select id="senderProject" required>
+                <option value="">Выберите проект</option>
+                <option>Магнетто</option>
+                <option>MadeTask</option>
+                <option>Sellers</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="senderAddress">Адрес отправителя:</label>
+            <input type="text" id="senderAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="recipientName">Получатель:</label>
+            <input type="text" id="recipientName" required>
+        </div>
+        <div class="form-group">
+            <label for="recipientPhone">Контактный телефон получателя:</label>
+            <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
+        </div>
+        <div class="form-group">
+            <label for="recipientAddress">Адрес получателя:</label>
+            <input type="text" id="recipientAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Что отправляется:</label>
+            <textarea id="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="urgency">Срочность:</label>
+            <select id="urgency" required>
+                <option value="">Выберите</option>
+                <option>Срочная</option>
+                <option>Обычная</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="deliveryDirection">Направление отправки:</label>
+            <select id="deliveryDirection" required>
+                <option value="">Выберите</option>
+                <option>С возвратом</option>
+                <option>В один конец</option>
+            </select>
+        </div>
+  
+        <button type="submit">Отправить заявку</button>
     </form>
-</body>
-<script type="text/javascript">
-    Telegram.WebApp.expand();
-    const form = document.getElementById('applicationForm');
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+
+    <script>
+        Telegram.WebApp.expand();
+        
+        const form = document.getElementById('applicationForm');
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
             
-        const formData = {
-            fullName: document.getElementById('fullName').value,
-            hireDate: document.getElementById('hireDate').value,
-            organization: document.getElementById('organization').value
+            const formData = {
+                deliveryType: document.getElementById('deliveryType').value,
+                hireDate: document.getElementById('hireDate').value,
+                senderName: document.getElementById('senderName').value,
+                senderOrganization: document.getElementById('senderOrganization').value,
+                senderProject: document.getElementById('senderProject').value,
+                senderAddress: document.getElementById('senderAddress').value,
+                recipientName: document.getElementById('recipientName').value,
+                recipientPhone: document.getElementById('recipientPhone').value,
+                recipientAddress: document.getElementById('recipientAddress').value,
+                description: document.getElementById('description').value,
+                urgency: document.getElementById('urgency').value,
+                deliveryDirection: document.getElementById('deliveryDirection').value
             };
             
-        Telegram.WebApp.ready();
-        Telegram.WebApp.sendData(JSON.stringify(formData));
-        Telegram.WebApp.close();
-               
+            // Валидация телефона
+            const phoneInput = document.getElementById('recipientPhone');
+            const phoneRegex = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
+            
+            if (!phoneRegex.test(phoneInput.value)) {
+                alert('Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX');
+                phoneInput.focus();
+                return;
+            }
+            
+            Telegram.WebApp.sendData(JSON.stringify(formData));
+            Telegram.WebApp.close();
         });
-</script>
+        
+        // Маска для телефона
+        document.getElementById('recipientPhone').addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            e.target.value = !x[2] ? x[1] : '+' + x[1] + ' (' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+        });
+    </script>
+</body>
 </html>
