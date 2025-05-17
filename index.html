@@ -13,6 +13,18 @@
             margin: 0 auto;
             line-height: 1.6;
         }
+        .form-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .form-section h4 {
+            margin-top: 0;
+            color: #0088cc;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
         .form-group {
             margin-bottom: 15px;
         }
@@ -53,75 +65,86 @@
 <body>
     <h3>Заявка на отправку</h3>
     <form id="applicationForm">
-        <div class="form-group">
-            <label for="deliveryType">Тип отправки:</label>
-            <select id="deliveryType" required>
-                <option value="">Выберите</option>
-                <option>Курьерская служба</option>
-                <option>Почтовое отправление</option>
-            </select>
+        <div class="form-section">
+            <h4>Общая информация</h4>
+            <div class="form-group">
+                <label for="deliveryType">Тип отправки:</label>
+                <select id="deliveryType" required>
+                    <option value="">Выберите</option>
+                    <option>Курьерская служба</option>
+                    <option>Почтовое отправление</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hireDate">Дата отправки:</label>
+                <input type="date" id="hireDate" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Что отправляется:</label>
+                <textarea id="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="urgency">Срочность:</label>
+                <select id="urgency" required>
+                    <option value="">Выберите</option>
+                    <option>Срочная</option>
+                    <option>Обычная</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deliveryDirection">Направление отправки:</label>
+                <select id="deliveryDirection" required>
+                    <option value="">Выберите</option>
+                    <option>С возвратом</option>
+                    <option>В один конец</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="hireDate">Дата отправки:</label>
-            <input type="date" id="hireDate" required>
+
+        <div class="form-section">
+            <h4>Информация об отправителе</h4>
+            <div class="form-group">
+                <label for="senderName">ФИО и контакт:</label>
+                <input type="text" id="senderName" required>
+            </div>
+            <div class="form-group">
+                <label for="senderOrganization">Юр.лицо:</label>
+                <select id="senderOrganization" required>
+                    <option value="">Выберите организацию</option>
+                    <option>Магнетто (ООО)</option>
+                    <option>НПФ Интех (ООО)</option>
+                    <option>Телекоминвест (ООО)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="senderProject">Проект:</label>
+                <select id="senderProject" required>
+                    <option value="">Выберите проект</option>
+                    <option>Магнетто</option>
+                    <option>MadeTask</option>
+                    <option>Sellers</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="senderAddress">Адрес:</label>
+                <input type="text" id="senderAddress" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="senderName">Отправитель (ФИО и контакт):</label>
-            <input type="text" id="senderName" required>
-        </div>
-        <div class="form-group">
-            <label for="senderOrganization">Юр.лицо отправителя:</label>
-            <select id="senderOrganization" required>
-                <option value="">Выберите организацию</option>
-                <option>Магнетто (ООО)</option>
-                <option>НПФ Интех (ООО)</option>
-                <option>Телекоминвест (ООО)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="senderProject">Проект отправителя:</label>
-            <select id="senderProject" required>
-                <option value="">Выберите проект</option>
-                <option>Магнетто</option>
-                <option>MadeTask</option>
-                <option>Sellers</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="senderAddress">Адрес отправителя:</label>
-            <input type="text" id="senderAddress" required>
-        </div>
-        <div class="form-group">
-            <label for="recipientName">Получатель:</label>
-            <input type="text" id="recipientName" required>
-        </div>
-        <div class="form-group">
-            <label for="recipientPhone">Контактный телефон получателя:</label>
-            <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
-        </div>
-        <div class="form-group">
-            <label for="recipientAddress">Адрес получателя:</label>
-            <input type="text" id="recipientAddress" required>
-        </div>
-        <div class="form-group">
-            <label for="description">Что отправляется:</label>
-            <textarea id="description" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="urgency">Срочность:</label>
-            <select id="urgency" required>
-                <option value="">Выберите</option>
-                <option>Срочная</option>
-                <option>Обычная</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="deliveryDirection">Направление отправки:</label>
-            <select id="deliveryDirection" required>
-                <option value="">Выберите</option>
-                <option>С возвратом</option>
-                <option>В один конец</option>
-            </select>
+
+        <div class="form-section">
+            <h4>Информация о получателе</h4>
+            <div class="form-group">
+                <label for="recipientName">ФИО:</label>
+                <input type="text" id="recipientName" required>
+            </div>
+            <div class="form-group">
+                <label for="recipientPhone">Контактный телефон:</label>
+                <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
+            </div>
+            <div class="form-group">
+                <label for="recipientAddress">Адрес:</label>
+                <input type="text" id="recipientAddress" required>
+            </div>
         </div>
   
         <button type="submit">Отправить заявку</button>
