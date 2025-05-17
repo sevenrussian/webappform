@@ -16,8 +16,102 @@
     </div>
     
     <form id="applicationForm">
-        <!-- Содержимое формы остается таким же как в вашем исходном коде -->
-        <!-- ... -->
+        <!-- Слайд 1 - Общая информация -->
+        <div class="form-slide active" id="slide1">
+            <div class="form-section">
+                <h4>Общая информация</h4>
+                <div class="form-group">
+                    <label for="deliveryType">Тип отправки:</label>
+                    <select id="deliveryType" required>
+                        <option value="">Выберите</option>
+                        <option>Курьерская служба</option>
+                        <option>Почтовое отправление</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hireDate">Дата отправки:</label>
+                    <input type="date" id="hireDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Что отправляется:</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="urgency">Срочность:</label>
+                    <select id="urgency" required>
+                        <option value="">Выберите</option>
+                        <option>Срочная</option>
+                        <option>Обычная</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryDirection">Направление отправки:</label>
+                    <select id="deliveryDirection" required>
+                        <option value="">Выберите</option>
+                        <option>С возвратом</option>
+                        <option>В один конец</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="button" class="next-btn">Далее →</button>
+            </div>
+        </div>
+        
+        <!-- Слайд 2 - Отправитель и получатель -->
+        <div class="form-slide next" id="slide2">
+            <div class="form-section">
+                <h4>Информация об отправителе</h4>
+                <div class="form-group">
+                    <label for="senderName">ФИО и контакт:</label>
+                    <input type="text" id="senderName" required>
+                </div>
+                <div class="form-group">
+                    <label for="senderOrganization">Юр.лицо:</label>
+                    <select id="senderOrganization" required>
+                        <option value="">Выберите организацию</option>
+                        <option>Магнетто (ООО)</option>
+                        <option>НПФ Интех (ООО)</option>
+                        <option>Телекоминвест (ООО)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="senderProject">Проект:</label>
+                    <select id="senderProject" required>
+                        <option value="">Выберите проект</option>
+                        <option>Магнетто</option>
+                        <option>MadeTask</option>
+                        <option>Sellers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="senderAddress">Адрес:</label>
+                    <input type="text" id="senderAddress" required>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h4>Информация о получателе</h4>
+                <div class="form-group">
+                    <label for="recipientName">ФИО:</label>
+                    <input type="text" id="recipientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipientPhone">Контактный телефон:</label>
+                    <input type="tel" id="recipientPhone" required pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" placeholder="+7 (XXX) XXX-XX-XX">
+                </div>
+                <div class="form-group">
+                    <label for="recipientAddress">Адрес:</label>
+                    <input type="text" id="recipientAddress" required>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="button" class="secondary prev-btn">← Назад</button>
+                <button type="submit">Отправить заявку</button>
+            </div>
+        </div>
     </form>
 
     <script src="../js/common.js"></script>
